@@ -21,6 +21,12 @@ class EventDay {
   getNumber() {
     return this.#number;
   }
+
+  christmasDDay() {
+    if (this.#number >= 1 && this.#number <= 25) {
+      return 1000 + 100 * (this.#number - 1);
+    }
+  }
 }
 
 export default EventDay;
