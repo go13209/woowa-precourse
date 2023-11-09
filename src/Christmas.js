@@ -27,6 +27,16 @@ class EventDay {
       return 1000 + 100 * (this.#number - 1);
     }
   }
+
+  weekday(orderList) {
+    if (this.#number % 7 !== 1 && this.#number % 7 !== 2) {
+      const DESSERT_CNT = orderList.reduce(
+        (cnt, menu) => cnt + (menu === '초코케이크' || menu === '아이스크림'),
+        0,
+      );
+      return 2023 * DESSERT_CNT;
+    }
+  }
 }
 
 export default EventDay;
