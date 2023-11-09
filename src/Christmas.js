@@ -37,6 +37,21 @@ class EventDay {
       return 2023 * DESSERT_CNT;
     }
   }
+
+  weekend(orderList) {
+    if (this.#number % 7 === 1 || this.#number % 7 === 2) {
+      const MAIN_CNT = orderList.reduce(
+        (cnt, menu) =>
+          cnt +
+          (menu === '티본스테이크' ||
+            menu === '바비큐립' ||
+            menu === '해산물파스타' ||
+            menu === '크리스마스파스타'),
+        0,
+      );
+      return 2023 * MAIN_CNT;
+    }
+  }
 }
 
 export default EventDay;
