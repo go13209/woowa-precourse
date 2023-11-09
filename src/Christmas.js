@@ -52,6 +52,12 @@ class EventDay {
       return 2023 * MAIN_CNT;
     }
   }
+
+  special() {
+    if (this.#number % 7 === 3 || this.#number === 25) {
+      return 1000;
+    }
+  }
 }
 
 export default EventDay;
