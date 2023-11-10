@@ -58,6 +58,12 @@ class EventDay {
       return 1000;
     }
   }
+
+  freeGift(totalPrice) {
+    if (totalPrice >= 120000) {
+      return 25000;
+    }
+  }
 }
 
 export default EventDay;
