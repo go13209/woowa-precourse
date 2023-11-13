@@ -88,6 +88,16 @@ class Receipt {
   getOrder() {
     return this.#order;
   }
+
+  totalPrice() {
+    let totalPrice = 0;
+
+    Object.entries(this.#order).forEach(([MENU_ITEM, QUANTITY]) => {
+      totalPrice += this.#menu[MENU_ITEM] * QUANTITY;
+    });
+
+    return totalPrice;
+  }
 }
 
 export default Receipt;
