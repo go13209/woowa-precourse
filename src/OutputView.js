@@ -33,6 +33,19 @@ const OutputView = {
       }
     }
   },
+  printTotalBenefits(orderInstance, eventDay) {
+    const benefits = orderInstance.totalBenefits(eventDay);
+    Console.print('<총혜택 금액>');
+    if (benefits.length === 0) {
+      Console.print('없음');
+    } else {
+      const totalDiscount = benefits.reduce(
+        (total, benefit) => total + benefit.amount,
+        0,
+      );
+      Console.print(`-${totalDiscount}원`);
+    }
+  },
 };
 
 export default OutputView;
