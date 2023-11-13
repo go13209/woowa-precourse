@@ -112,6 +112,23 @@ class Receipt {
       benefit => benefit.amount !== undefined && benefit.amount !== 0,
     );
   }
+
+  eventBadge(eventDay) {
+    const totalBenefits = this.totalBenefits(eventDay);
+    const totalDiscount = totalBenefits.reduce(
+      (total, benefit) => total + benefit.amount,
+      0,
+    );
+    if (totalDiscount >= 20000) {
+      return '산타';
+    } else if (totalDiscount >= 10000) {
+      return '트리';
+    } else if (totalDiscount >= 5000) {
+      return '별';
+    } else {
+      return '없음';
+    }
+  }
 }
 
 export default Receipt;

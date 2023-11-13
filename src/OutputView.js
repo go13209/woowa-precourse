@@ -59,6 +59,11 @@ const OutputView = {
     Console.print('<할인 후 예상 결제 금액>');
     Console.print(`${expectedPrice}원`);
   },
+  printEventBadge(orderInstance, eventDay) {
+    const eventBadge = orderInstance.eventBadge(eventDay);
+    Console.print('<12월 이벤트 배지>');
+    Console.print(eventBadge);
+  },
 };
 
 export default OutputView;
