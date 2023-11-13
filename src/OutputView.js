@@ -46,6 +46,19 @@ const OutputView = {
       Console.print(`-${totalDiscount}원`);
     }
   },
+  printExpectedPrice(orderInstance, eventDay) {
+    const benefits = orderInstance.totalBenefits(eventDay);
+    const totalBenefits = benefits.reduce((total, benefit) => {
+      if (benefit.type !== '증정 이벤트') {
+        return total + benefit.amount;
+      }
+      return total;
+    }, 0);
+    const expectedPrice = orderInstance.totalPrice() - totalBenefits;
+
+    Console.print('<할인 후 예상 결제 금액>');
+    Console.print(`${expectedPrice}원`);
+  },
 };
 
 export default OutputView;
