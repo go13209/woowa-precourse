@@ -98,6 +98,20 @@ class Receipt {
 
     return totalPrice;
   }
+
+  totalBenefits(eventDay) {
+    const benefits = [
+      { type: '크리스마스 디데이 할인', amount: eventDay.christmasDDay() },
+      { type: '평일 할인', amount: eventDay.weekday(this.#order) },
+      { type: '주말 할인', amount: eventDay.weekend(this.#order) },
+      { type: '특별 할인', amount: eventDay.special() },
+      { type: '증정 이벤트', amount: eventDay.freeGift(this.totalPrice()) },
+    ];
+
+    return benefits.filter(
+      benefit => benefit.amount !== undefined && benefit.amount !== 0,
+    );
+  }
 }
 
 export default Receipt;

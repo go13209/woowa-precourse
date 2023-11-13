@@ -21,6 +21,18 @@ const OutputView = {
       Console.print('없음');
     }
   },
+  printBenefits(orderInstance, eventDay) {
+    const benefits = orderInstance.totalBenefits(eventDay);
+
+    Console.print('<혜택 내역>');
+    if (benefits.length === 0) {
+      Console.print('없음');
+    } else {
+      for (const benefit of benefits) {
+        Console.print(`${benefit.type}: -${benefit.amount}원`);
+      }
+    }
+  },
 };
 
 export default OutputView;

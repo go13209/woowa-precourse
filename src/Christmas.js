@@ -30,8 +30,9 @@ class EventDay {
 
   weekday(orderList) {
     if (this.#number % 7 !== 1 && this.#number % 7 !== 2) {
-      const DESSERT_CNT = orderList.reduce(
-        (cnt, menu) => cnt + (menu === '초코케이크' || menu === '아이스크림'),
+      const DESSERT_CNT = Object.entries(orderList).reduce(
+        (cnt, [menu, quantity]) =>
+          cnt + (menu === '초코케이크' || menu === '아이스크림' ? quantity : 0),
         0,
       );
       return 2023 * DESSERT_CNT;
@@ -40,7 +41,7 @@ class EventDay {
 
   weekend(orderList) {
     if (this.#number % 7 === 1 || this.#number % 7 === 2) {
-      const MAIN_CNT = orderList.reduce(
+      const MAIN_CNT = Object.keys(orderList).reduce(
         (cnt, menu) =>
           cnt +
           (menu === '티본스테이크' ||
