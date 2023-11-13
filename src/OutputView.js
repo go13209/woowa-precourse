@@ -13,6 +13,14 @@ const OutputView = {
     Console.print('<할인 전 총주문 금액>');
     Console.print(`${orderInstance.totalPrice()}원`);
   },
+  printFreeGift(eventDay, totalPrice) {
+    Console.print('<증정 메뉴>');
+    if (eventDay.freeGift(totalPrice)) {
+      Console.print('샴페인 1개');
+    } else {
+      Console.print('없음');
+    }
+  },
 };
 
 export default OutputView;
