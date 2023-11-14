@@ -22,14 +22,18 @@ class EventDay {
     return this.#number;
   }
 
-  christmasDDay() {
-    if (this.#number >= 1 && this.#number <= 25) {
+  christmasDDay(totalPrice) {
+    if (this.#number >= 1 && this.#number <= 25 && totalPrice > 10000) {
       return 1000 + 100 * (this.#number - 1);
     }
   }
 
-  weekday(orderArray) {
-    if (this.#number % 7 !== 1 && this.#number % 7 !== 2) {
+  weekday(totalPrice) {
+    if (
+      this.#number % 7 !== 1 &&
+      this.#number % 7 !== 2 &&
+      totalPrice > 10000
+    ) {
       const DESSERT_CNT = orderArray.reduce(
         (cnt, { menu, quantity }) =>
           cnt + (menu === '초코케이크' || menu === '아이스크림' ? quantity : 0),
@@ -39,8 +43,11 @@ class EventDay {
     }
   }
 
-  weekend(orderArray) {
-    if (this.#number % 7 === 1 || this.#number % 7 === 2) {
+  weekend(totalPrice) {
+    if (
+      (this.#number % 7 === 1 || this.#number % 7 === 2) &&
+      totalPrice > 10000
+    ) {
       const MAIN_CNT = orderArray.reduce(
         (cnt, { menu }) =>
           cnt +
@@ -54,8 +61,8 @@ class EventDay {
     }
   }
 
-  special() {
-    if (this.#number % 7 === 3 || this.#number === 25) {
+  special(totalPrice) {
+    if ((this.#number % 7 === 3 || this.#number === 25) && totalPrice > 10000) {
       return 1000;
     }
   }

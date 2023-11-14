@@ -85,23 +85,23 @@ class Receipt {
 
   totalPrice() {
     let TOTAL_PRICE = 0;
-
     this.#order.forEach(order => {
       TOTAL_PRICE += this.#menu[order.menu] * order.quantity;
     });
-
     return TOTAL_PRICE;
   }
 
   totalBenefits(eventDay) {
     const BENEFITS = [
-      { type: '크리스마스 디데이 할인', amount: eventDay.christmasDDay() },
-      { type: '평일 할인', amount: eventDay.weekday(this.#order) },
-      { type: '주말 할인', amount: eventDay.weekend(this.#order) },
-      { type: '특별 할인', amount: eventDay.special() },
+      {
+        type: '크리스마스 디데이 할인',
+        amount: eventDay.christmasDDay(this.totalPrice()),
+      },
+      { type: '평일 할인', amount: eventDay.weekday(this.totalPrice()) },
+      { type: '주말 할인', amount: eventDay.weekend(this.totalPrice()) },
+      { type: '특별 할인', amount: eventDay.special(this.totalPrice()) },
       { type: '증정 이벤트', amount: eventDay.freeGift(this.totalPrice()) },
     ];
-
     return BENEFITS.filter(
       benefit => benefit.amount !== undefined && benefit.amount !== 0,
     );
