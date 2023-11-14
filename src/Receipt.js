@@ -84,50 +84,40 @@ class Receipt {
   }
 
   totalPrice() {
-    let TOTAL_PRICE = 0;
-    this.#order.forEach(order => {
-      TOTAL_PRICE += this.#menu[order.menu] * order.quantity;
+    let totalPrice = 0;
+    this.#order.forEach((order) => {
+      totalPrice += this.#menu[order.menu] * order.quantity;
     });
-    return TOTAL_PRICE;
+    return totalPrice;
   }
 
   totalBenefits(eventDay) {
+    const TOTAL_PRICE = this.totalPrice();
     const BENEFITS = [
       {
         type: '크리스마스 디데이 할인',
-        amount: eventDay.christmasDDay(this.totalPrice()),
+        amount: eventDay.christmasDDay(TOTAL_PRICE),
       },
-      {
-        type: '평일 할인',
-        amount: eventDay.weekday(this.#order, this.totalPrice()),
-      },
-      {
-        type: '주말 할인',
-        amount: eventDay.weekend(this.#order, this.totalPrice()),
-      },
-      { type: '특별 할인', amount: eventDay.special(this.totalPrice()) },
-      { type: '증정 이벤트', amount: eventDay.freeGift(this.totalPrice()) },
+      { type: '평일 할인', amount: eventDay.weekday(this.#order, TOTAL_PRICE) },
+      { type: '주말 할인', amount: eventDay.weekend(this.#order, TOTAL_PRICE) },
+      { type: '특별 할인', amount: eventDay.special(TOTAL_PRICE) },
+      { type: '증정 이벤트', amount: eventDay.freeGift(TOTAL_PRICE) },
     ];
-    return BENEFITS.filter(
-      benefit => benefit.amount !== undefined && benefit.amount !== 0,
-    );
+    return BENEFITS.filter((benefit) => benefit.amount);
   }
 
   eventBadge(eventDay) {
-    const TOTAL_BENEFITS = this.totalBenefits(eventDay);
-    const TOTAL_DISCOUNT = TOTAL_BENEFITS.reduce(
+    const TOTAL_DISCOUNT = this.totalBenefits(eventDay).reduce(
       (total, benefit) => total + benefit.amount,
       0,
     );
-    if (TOTAL_DISCOUNT >= 20000) {
-      return '산타';
-    } else if (TOTAL_DISCOUNT >= 10000) {
-      return '트리';
-    } else if (TOTAL_DISCOUNT >= 5000) {
-      return '별';
-    } else {
-      return '없음';
-    }
+    return TOTAL_DISCOUNT >= 20000
+      ? '산타'
+      : TOTAL_DISCOUNT >= 10000
+      ? '트리'
+      : TOTAL_DISCOUNT >= 5000
+      ? '별'
+      : '없음';
   }
 }
 

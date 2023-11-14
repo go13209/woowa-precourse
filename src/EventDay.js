@@ -23,7 +23,7 @@ class EventDay {
   }
 
   christmasDDay(totalPrice) {
-    if (this.#number >= 1 && this.#number <= 25 && totalPrice > 10000) {
+    if (this.#number >= 1 && this.#number <= 25 && totalPrice >= 10000) {
       return 1000 + 100 * (this.#number - 1);
     }
   }
@@ -32,7 +32,7 @@ class EventDay {
     if (
       this.#number % 7 !== 1 &&
       this.#number % 7 !== 2 &&
-      totalPrice > 10000
+      totalPrice >= 10000
     ) {
       const DESSERT_CNT = orderArray.reduce(
         (cnt, { menu, quantity }) =>
@@ -44,25 +44,27 @@ class EventDay {
   }
 
   weekend(orderArray, totalPrice) {
-    if (
-      (this.#number % 7 === 1 || this.#number % 7 === 2) &&
-      totalPrice > 10000
-    ) {
-      const MAIN_CNT = orderArray.reduce(
-        (cnt, { menu }) =>
-          cnt +
-          (menu === '티본스테이크' ||
-            menu === '바비큐립' ||
-            menu === '해산물파스타' ||
-            menu === '크리스마스파스타'),
-        0,
-      );
+    const isWeekend = this.#number % 7 === 1 || this.#number % 7 === 2;
+    const isTotalPriceValid = totalPrice >= 10000;
+    if (isWeekend && isTotalPriceValid) {
+      const MAIN_MENU_LIST = [
+        '티본스테이크',
+        '바비큐립',
+        '해산물파스타',
+        '크리스마스파스타',
+      ];
+      const MAIN_CNT = orderArray
+        .filter(({ menu }) => MAIN_MENU_LIST.includes(menu))
+        .reduce((cnt, { quantity }) => cnt + quantity, 0);
       return 2023 * MAIN_CNT;
     }
   }
 
   special(totalPrice) {
-    if ((this.#number % 7 === 3 || this.#number === 25) && totalPrice > 10000) {
+    if (
+      (this.#number % 7 === 3 || this.#number === 25) &&
+      totalPrice >= 10000
+    ) {
       return 1000;
     }
   }
