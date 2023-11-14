@@ -1,5 +1,5 @@
 import { Console } from '@woowacourse/mission-utils';
-import EventDay from './Christmas.js';
+import EventDay from './EventDay.js';
 import Receipt from './Receipt.js';
 
 const InputView = {

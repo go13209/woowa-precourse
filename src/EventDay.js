@@ -28,10 +28,10 @@ class EventDay {
     }
   }
 
-  weekday(orderList) {
+  weekday(orderArray) {
     if (this.#number % 7 !== 1 && this.#number % 7 !== 2) {
-      const DESSERT_CNT = Object.entries(orderList).reduce(
-        (cnt, [menu, quantity]) =>
+      const DESSERT_CNT = orderArray.reduce(
+        (cnt, { menu, quantity }) =>
           cnt + (menu === '초코케이크' || menu === '아이스크림' ? quantity : 0),
         0,
       );
@@ -39,10 +39,10 @@ class EventDay {
     }
   }
 
-  weekend(orderList) {
+  weekend(orderArray) {
     if (this.#number % 7 === 1 || this.#number % 7 === 2) {
-      const MAIN_CNT = Object.keys(orderList).reduce(
-        (cnt, menu) =>
+      const MAIN_CNT = orderArray.reduce(
+        (cnt, { menu }) =>
           cnt +
           (menu === '티본스테이크' ||
             menu === '바비큐립' ||

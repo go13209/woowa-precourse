@@ -21,7 +21,7 @@ class Receipt {
   }
 
   #validate(order) {
-    const ORDER_OBJECT = {};
+    const ORDER_ARRAY = [];
     const ORDER_LIST = order.split(',');
 
     if (ORDER_LIST.length === 0) {
@@ -58,13 +58,7 @@ class Receipt {
         );
       }
 
-      if (ORDER_OBJECT[MENU_ITEM]) {
-        throw new Error(
-          '[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.',
-        );
-      }
-
-      ORDER_OBJECT[MENU_ITEM] = NUMBER_QUANTITY;
+      ORDER_ARRAY.push({ menu: MENU_ITEM, quantity: NUMBER_QUANTITY });
 
       if (!['제로콜라', '레드와인', '샴페인'].includes(MENU_ITEM)) {
         hasFood = true;
@@ -75,14 +69,14 @@ class Receipt {
       throw new Error('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.');
     }
 
-    const TOTAL_QUANTITY = Object.values(ORDER_OBJECT).reduce(
+    const TOTAL_QUANTITY = Object.values(ORDER_ARRAY).reduce(
       (cnt, QUANTITY) => cnt + QUANTITY,
       0,
     );
     if (TOTAL_QUANTITY > 20) {
       throw new Error('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.');
     }
-    return ORDER_OBJECT;
+    return ORDER_ARRAY;
   }
 
   getOrder() {
@@ -90,17 +84,17 @@ class Receipt {
   }
 
   totalPrice() {
-    let totalPrice = 0;
+    let TOTAL_PRICE = 0;
 
-    Object.entries(this.#order).forEach(([MENU_ITEM, QUANTITY]) => {
-      totalPrice += this.#menu[MENU_ITEM] * QUANTITY;
+    this.#order.forEach(order => {
+      TOTAL_PRICE += this.#menu[order.menu] * order.quantity;
     });
 
-    return totalPrice;
+    return TOTAL_PRICE;
   }
 
   totalBenefits(eventDay) {
-    const benefits = [
+    const BENEFITS = [
       { type: '크리스마스 디데이 할인', amount: eventDay.christmasDDay() },
       { type: '평일 할인', amount: eventDay.weekday(this.#order) },
       { type: '주말 할인', amount: eventDay.weekend(this.#order) },
@@ -108,22 +102,22 @@ class Receipt {
       { type: '증정 이벤트', amount: eventDay.freeGift(this.totalPrice()) },
     ];
 
-    return benefits.filter(
+    return BENEFITS.filter(
       benefit => benefit.amount !== undefined && benefit.amount !== 0,
     );
   }
 
   eventBadge(eventDay) {
-    const totalBenefits = this.totalBenefits(eventDay);
-    const totalDiscount = totalBenefits.reduce(
+    const TOTAL_BENEFITS = this.totalBenefits(eventDay);
+    const TOTAL_DISCOUNT = TOTAL_BENEFITS.reduce(
       (total, benefit) => total + benefit.amount,
       0,
     );
-    if (totalDiscount >= 20000) {
+    if (TOTAL_DISCOUNT >= 20000) {
       return '산타';
-    } else if (totalDiscount >= 10000) {
+    } else if (TOTAL_DISCOUNT >= 10000) {
       return '트리';
-    } else if (totalDiscount >= 5000) {
+    } else if (TOTAL_DISCOUNT >= 5000) {
       return '별';
     } else {
       return '없음';
