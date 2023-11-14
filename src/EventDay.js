@@ -28,7 +28,7 @@ class EventDay {
     }
   }
 
-  weekday(totalPrice) {
+  weekday(orderArray, totalPrice) {
     if (
       this.#number % 7 !== 1 &&
       this.#number % 7 !== 2 &&
@@ -43,7 +43,7 @@ class EventDay {
     }
   }
 
-  weekend(totalPrice) {
+  weekend(orderArray, totalPrice) {
     if (
       (this.#number % 7 === 1 || this.#number % 7 === 2) &&
       totalPrice > 10000
