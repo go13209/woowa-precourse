@@ -69,8 +69,8 @@ class Receipt {
       throw new Error('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.');
     }
 
-    const TOTAL_QUANTITY = Object.values(ORDER_ARRAY).reduce(
-      (cnt, QUANTITY) => cnt + QUANTITY,
+    const TOTAL_QUANTITY = ORDER_ARRAY.reduce(
+      (cnt, order) => cnt + order.quantity,
       0,
     );
     if (TOTAL_QUANTITY > 20) {
