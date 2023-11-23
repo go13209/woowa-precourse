@@ -1,18 +1,19 @@
 import { Console } from '@woowacourse/mission-utils';
 
 const OutputView = {
-  printResult(strike, ball) {
-    if (strike === 3) {
+  printResult({ BALL, STRIKE }) {
+    if (STRIKE === 3) {
       Console.print('3스트라이크\n3개의 숫자를 모두 맞히셨습니다! 게임 종료');
-    } else if (ball === 0 && strike === 0) {
+    } else if (BALL === 0 && STRIKE === 0) {
       Console.print('낫싱');
-    } else if (ball === 0 && strike > 0) {
-      Console.print(`${strike}스트라이크`);
-    } else if (ball > 0 && strike === 0) {
-      Console.print(`${ball}볼`);
+    } else if (BALL === 0 && STRIKE > 0) {
+      Console.print(`${STRIKE}스트라이크`);
+    } else if (BALL > 0 && STRIKE === 0) {
+      Console.print(`${BALL}볼`);
     } else {
-      Console.print(`${ball}볼 ${strike}스트라이크`);
+      Console.print(`${BALL}볼 ${STRIKE}스트라이크`);
     }
+    return STRIKE !== 3;
   },
 };
 
